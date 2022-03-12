@@ -1,17 +1,19 @@
 import Character from './Character.js'
 import { getRandomPokemon } from './utils.js'
 
-const placeholder = {
-    name: "Jumpluff",
-    avatar: "https://img.pokemondb.net/artwork/vector/large/jumpluff.png",
-    health: 100,
-    diceCount: 3,
-    currentDiceScore: []
-}
+// not needed while the game remains 1vs1
 
-const baby = new Character(placeholder)
+// const placeholder = {
+//     name: "Jumpluff",
+//     avatar: "https://img.pokemondb.net/artwork/vector/large/jumpluff.png",
+//     health: 100,
+//     diceCount: 3,
+//     currentDiceScore: []
+// }
 
-let monstersArray = [baby, baby, baby, baby, baby]
+// const baby = new Character(placeholder)
+
+// let monstersArray = [baby, baby, baby, baby, baby]
 let playerTeam = []
 let enemyTeam = []
 let isWaiting = false
@@ -25,7 +27,7 @@ let getPokemonData = fetch(`https://pokeapi.co/api/v2/pokemon/${getRandomPokemon
             health: 100,
             diceCount: 3,
             currentDiceScore: []
-        }
+        } 
         // while team is less than 6
         // fetch again from api and add to array
 
@@ -53,32 +55,51 @@ let getPokemonData = fetch(`https://pokeapi.co/api/v2/pokemon/${getRandomPokemon
     )
     .then(res => res.json())
     getPokemonData.then(() => {
-    function attack() {
-        if(!isWaiting){
-            playerTeam[0].setDiceHtml()
-            enemyTeam[0].setDiceHtml()
-            playerTeam[0].takeDamage(enemyTeam[0].currentDiceScore)
-            enemyTeam[0].takeDamage(playerTeam[0].currentDiceScore)
-            document.getElementById('playerTeam').innerHTML = playerTeam[0].getCharacterHtml()
-            document.getElementById('enemyTeam').innerHTML = enemyTeam[0].getCharacterHtml() 
-            if(playerTeam[0].dead){
-                endGame()
-            }
-            else if(enemyTeam[0].dead){
-                isWaiting = true
-                if(monstersArray.length > 0){
-                    setTimeout(()=>{
-                        enemyTeam[0] = getNewMonster()
-                        render()
-                        isWaiting = false
-                    },1500)
-                }
-                else{
+
+        // simplified while the game remains 1vs1
+        function attack() {
+            if(!isWaiting){
+                playerTeam[0].setDiceHtml()
+                enemyTeam[0].setDiceHtml()
+                playerTeam[0].takeDamage(enemyTeam[0].currentDiceScore)
+                enemyTeam[0].takeDamage(playerTeam[0].currentDiceScore)
+                document.getElementById('playerTeam').innerHTML = playerTeam[0].getCharacterHtml()
+                document.getElementById('enemyTeam').innerHTML = enemyTeam[0].getCharacterHtml() 
+                if(playerTeam[0].dead){
                     endGame()
                 }
-            }    
-        }
-    }
+                else if(enemyTeam[0].dead){
+                    endGame()
+                }    
+            }
+        }        
+
+    // function attack() {
+    //     if(!isWaiting){
+    //         playerTeam[0].setDiceHtml()
+    //         enemyTeam[0].setDiceHtml()
+    //         playerTeam[0].takeDamage(enemyTeam[0].currentDiceScore)
+    //         enemyTeam[0].takeDamage(playerTeam[0].currentDiceScore)
+    //         document.getElementById('playerTeam').innerHTML = playerTeam[0].getCharacterHtml()
+    //         document.getElementById('enemyTeam').innerHTML = enemyTeam[0].getCharacterHtml() 
+    //         if(playerTeam[0].dead){
+    //             endGame()
+    //         }
+    //         else if(enemyTeam[0].dead){
+    //             isWaiting = true
+    //             if(monstersArray.length > 0){
+    //                 setTimeout(()=>{
+    //                     enemyTeam[0] = getNewMonster()
+    //                     render()
+    //                     isWaiting = false
+    //                 },1500)
+    //             }
+    //             else{
+    //                 endGame()
+    //             }
+    //         }    
+    //     }
+    // }
 
     function endGame() {
         isWaiting = true
@@ -99,13 +120,11 @@ let getPokemonData = fetch(`https://pokeapi.co/api/v2/pokemon/${getRandomPokemon
             }, 1500)
     }
 
-    function getNewMonster() {
-        const nextMonsterData = characterData[monstersArray.shift()]
-        return nextMonsterData ? new Character(nextMonsterData) : {}
-    }
+    // not needed while the game remains 1vs1
+    // function getNewMonster() {
+    //     const nextMonsterData = characterData[monstersArray.shift()]
+    //     return nextMonsterData ? new Character(nextMonsterData) : {}
+    // }
     
     document.getElementById("attack-button").addEventListener('click', attack)
-
-
-
 })
