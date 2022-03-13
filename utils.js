@@ -9,16 +9,12 @@ const getPercentage = (remainingHealth, maximumHealth) =>
 
 function getDicePlaceholderHtml(diceCount) {
     return new Array(diceCount).fill(0).map(() =>
-        `<div class="placeholder-dice"></div>`
+        `<div class="placeholder-dice">  <i id="dice" class="fas fa-solid fa-dice-five"></i></div>`
     ).join("")
 }
 
-function getBestPokemon() {
-    return Math.floor((Math.random() * 3) + 1)
-}
-
 function getRandomPokemon() {
-    return Math.floor((Math.random() * 905) + 1)
+    return Math.floor((Math.random() * 898) + 1)
 }
 
-export { getDiceRollArray, getDicePlaceholderHtml, getPercentage, getBestPokemon, getRandomPokemon }
+export { getDiceRollArray, getDicePlaceholderHtml, getPercentage, getRandomPokemon }
